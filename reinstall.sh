@@ -17,7 +17,7 @@ tmp2=""
 echo "  Depency-packages..."
 oldifs="$IFS"
 IFS=$'\n'
-for e in `yaourt -Qdn`; do
+for e in `paru -Qdn`; do
   tmp1=$(echo $e | cut -d' ' -f1)
   tmp2=$(echo $e | cut -d' ' -f2)
   if [ ! -z "$tmp1" -a ! -z "$tmp2" ]; then
@@ -27,7 +27,7 @@ done
 tmp1=""
 tmp2=""
 echo "  Explicit-packages..."
-for e in `yaourt -Qen`; do
+for e in `paru -Qen`; do
   tmp1=$(echo $e | cut -d' ' -f1)
   tmp2=$(echo $e | cut -d' ' -f2)
   if [ ! -z "$tmp1" -a ! -z "$tmp2" ]; then
@@ -43,7 +43,7 @@ tmp2=""
 echo "  Depency-Packages"
 for e in "${deps_worklist[@]}"; do
   echo "   Package: '$e'"
-  yaourt -S $e --asdeps --force --noconfirm > /dev/null 2>&1
+  paru -S $e --asdeps --overwrite='*' --noconfirm > /dev/null 2>&1
   if test $? -ne 0; then
     echo "Warning: Package '$e' could not be reinstalled"
   fi
@@ -54,7 +54,7 @@ tmp1=""
 echo "  Explicit-Packages"
 for e in "${expl_worklist[@]}"; do
   echo "   Package: $e"
-  yaourt -S $e --asexplicit --force --noconfirm > /dev/null 2>&1
+  paru -S $e --asexplicit --overwrite='*' --noconfirm > /dev/null 2>&1
   if test $? -ne 0; then
     echo "Warning: Package '$e' could not be reinstalled"
   fi
